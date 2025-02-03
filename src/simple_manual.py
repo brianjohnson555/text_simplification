@@ -1,5 +1,4 @@
 ###### import packages, sentence model, and parse html from site url
-import requests
 import re
 import jieba
 import torch
@@ -41,8 +40,9 @@ def simplify(sentence: str, max_HSK: int):
     tokens_no_ner = list(set(tokens_l) - set(tokens_ner))
 
     replacement_dict = replace_words(tokens_no_ner, max_HSK) # do not replace NER
-
     sentence_new = sentence
     for key, value in replacement_dict.items():
         sentence_new = sentence_new.replace(key, value)
+
+    return sentence_new
 
