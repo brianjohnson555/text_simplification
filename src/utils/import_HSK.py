@@ -1,4 +1,4 @@
-"""Reads HSK vocabulary files from internet sources and compiles into single Pandas dataframe saved as pickle"""
+"""Reads HSK vocabulary files and compiles into single Pandas dataframe saved as pickle"""
 
 ### import packages
 import pandas as pd
@@ -11,7 +11,7 @@ sentence_model = SentenceTransformer('paraphrase-MiniLM-L6-v2') # model for embe
 HSK_nums = [('1', 1), ('2', 2), ('3', 3), ('4', 4), ('5', 5), ('6', 6), ('7_9', 7)] # HSK definitions to load files
 HSK = pd.DataFrame()
 for hsk in HSK_nums:
-    hsk_df = pd.read_csv("./data/Chinese/HSK/HSK"+hsk[0]+".tsv", sep="\t", header=None)
+    hsk_df = pd.read_csv("./data/HSK/raw/HSK"+hsk[0]+".tsv", sep="\t", header=None)
     hsk_df.drop(0, axis=1, inplace=True)
     hsk_df.rename(columns={1: "character", 2: "pinyin", 3: "definition"}, inplace=True)
     hsk_df.insert(loc=2, column="HSK", value=[hsk[1]]*hsk_df.shape[0])
@@ -21,7 +21,7 @@ HSK.drop_duplicates("character", keep="first", inplace=True)
 HSK.reset_index(inplace=True, drop=True)
 
 ### data containing POS but not definition
-HSK2 = pd.read_csv("./data/Chinese/HSK/hsk30.csv")
+HSK2 = pd.read_csv("./data/HSK/raw/hsk30.csv")
 HSK2.rename(columns={'Simplified':'character'}, inplace=True)
 HSK2.drop(labels=['Traditional', 'Pinyin', 'WebNo', 'ID', 'WebPinyin', 'OCR', 'Variants', 'CEDICT','Level'], axis=1, inplace=True)
 
@@ -37,4 +37,4 @@ HSK_full['top_choice'] = top_choice
 HSK_full['top_choice_level'] = top_choice_HSK
 
 ### save
-HSK_full.to_pickle("./data/Chinese/HSK_full")
+HSK_full.to_pickle("./data/HSK/HSK_full")

@@ -1,4 +1,6 @@
-###### import packages, sentence model, and parse html from site url
+"""Functions for lexical simplification (LS) task using HSK dictionary lookup and best candidate replacement."""
+
+###### import packages, NER pipeline
 import re
 import jieba
 import torch
@@ -9,11 +11,13 @@ from modelscope.pipelines import pipeline
 from modelscope.utils.constant import Tasks
 ner_pipeline = pipeline(Tasks.named_entity_recognition, 'damo/nlp_raner_named-entity-recognition_chinese-base-news')
 
-HSK = pd.read_pickle("../data/Chinese/HSK_full")
-top_choice = torch.tensor(HSK['top_choice'])
-top_choice_HSK = torch.tensor(HSK['top_choice_level'])
+###### Read HSK data
+HSK = pd.read_pickle("../data/HSK/HSK_full")
+top_choice = torch.tensor(HSK['top_choice']) # top replacement candidates (index)
+top_choice_HSK = torch.tensor(HSK['top_choice_level']) # top replacement candidates (HSK level)
 
 def replace_words(tokens, max_HSK):
+    """Replaces input tokens with tokens at or below max_HSK level."""
     simplified_tokens = dict()
     for token in tokens:
         try:
@@ -28,21 +32,22 @@ def replace_words(tokens, max_HSK):
     return simplified_tokens
 
 def simplify(sentence: str, max_HSK: int):
+    """Performs LS word replacement of input sentence at the given max_HSK level."""
     punc = ",!?！？｡。＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏.-" # possible punctuation
     sentence.translate(str.maketrans('', '', string.punctuation)) # convert str format
-    text_re = re.sub(r"[%s]+" %punc, "", sentence) # remove punctuation marks
+    text_re = re.sub(r"[%s]+" %punc, "", sentence) # remove punctuation
 
     tokens = jieba.lcut(text_re, cut_all=False) # tokenize
     tokens_l = list(dict.fromkeys(tokens)) #TODO: try: list(set(tokens))
 
-    ner_output = ner_pipeline(text_re)['output']
+    ner_output = ner_pipeline(text_re)['output'] # run NER pipeline, generate tokens
     tokens_ner = list(set([d['span'] for d in ner_output if len(d['span'])>1])) # only collect NER longer than 1 character
-    tokens_no_ner = list(set(tokens_l) - set(tokens_ner))
+    tokens_no_ner = list(set(tokens_l) - set(tokens_ner)) # get all tokens that are NOT named entities
 
-    replacement_dict = replace_words(tokens_no_ner, max_HSK) # do not replace NER
+    replacement_dict = replace_words(tokens_no_ner, max_HSK) # replace all tokens except named entities
     sentence_new = sentence
     for key, value in replacement_dict.items():
-        sentence_new = sentence_new.replace(key, value)
+        sentence_new = sentence_new.replace(key, value) # create output str
 
     return sentence_new
 
