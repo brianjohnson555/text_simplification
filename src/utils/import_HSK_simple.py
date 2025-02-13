@@ -18,6 +18,7 @@ HSK.replace(to_replace='7-9', value='7', inplace=True)
 HSK['level'] = HSK['level'].astype(int)
 
 ### save
-HSK_dict = HSK[HSK["level"]>3].to_dict()['level'] ### Only selecting HSK4 and above!
+# HSK_dict = HSK[HSK["level"]>3].to_dict()['level'] ### Only selecting HSK4 and above!
+HSK_dict = HSK.to_dict()['level'] ### Only selecting HSK4 and above!
 with open("./data/HSK/HSK_levels.pickle", "wb") as handle:
     pickle.dump(HSK_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)

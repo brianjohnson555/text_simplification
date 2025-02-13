@@ -5,7 +5,8 @@ import pandas as pd
 import numpy as np
 import torch
 from sentence_transformers import SentenceTransformer, util
-sentence_model = SentenceTransformer('paraphrase-MiniLM-L6-v2') # model for embedding
+# sentence_model = SentenceTransformer('paraphrase-MiniLM-L6-v2') # model for embedding
+sentence_model = SentenceTransformer('BAAI/bge-large-zh-v1.5') #TODO: compare sentence model results
 
 ### data containing definition (english) but not POS (noun, verb, adj, etc.)
 HSK_nums = [('1', 1), ('2', 2), ('3', 3), ('4', 4), ('5', 5), ('6', 6), ('7_9', 7)] # HSK definitions to load files
