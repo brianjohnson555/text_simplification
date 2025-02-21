@@ -5,10 +5,6 @@ import pandas as pd
 import numpy as np
 import pickle
 
-### data containing definition (english) but not POS (noun, verb, adj, etc.)
-HSK_nums = [('1', 1), ('2', 2), ('3', 3), ('4', 4), ('5', 5), ('6', 6), ('7-9', 7)] # HSK definitions to load files
-HSK = pd.DataFrame()
-
 ### data containing POS but not definition
 HSK = pd.read_csv("./data/HSK/raw/hsk30.csv")
 HSK.index = HSK['Simplified']
@@ -19,6 +15,6 @@ HSK['level'] = HSK['level'].astype(int)
 
 ### save
 # HSK_dict = HSK[HSK["level"]>3].to_dict()['level'] ### Only selecting HSK4 and above!
-HSK_dict = HSK.to_dict()['level'] ### Only selecting HSK4 and above!
+HSK_dict = HSK.to_dict()['level']
 with open("./data/HSK/HSK_levels.pickle", "wb") as handle:
     pickle.dump(HSK_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
