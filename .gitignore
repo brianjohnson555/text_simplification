@@ -2,3 +2,4 @@ mcts-main
 data/models
 data/mcts-pseudo
 easse/
+data/pseudo_tokenized
