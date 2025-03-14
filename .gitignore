@@ -1,5 +1,6 @@
 mcts-main
 data/models
 data/mcts-pseudo
-easse/
+venv/
 data/pseudo_tokenized
+ts_lite/model
