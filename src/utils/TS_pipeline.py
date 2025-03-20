@@ -1,8 +1,8 @@
 """Pipeline for both text simplification (TS) with BART, and combined approach with LS_BART and BART_LS"""
 import utils.LS_pipeline as LS
 from transformers import BertTokenizer, BartForConditionalGeneration, Text2TextGenerationPipeline
-tokenizer = BertTokenizer.from_pretrained("../data/models/checkpoint_14064", local_files_only=True)
-model = BartForConditionalGeneration.from_pretrained("../data/models/checkpoint_14064", local_files_only=True)
+tokenizer = BertTokenizer.from_pretrained("johnsonrobotics24/bart-base-chinese-textsimplification-v1.0")
+model = BartForConditionalGeneration.from_pretrained("johnsonrobotics24/bart-base-chinese-textsimplification-v1.0")
 text2text_generator = Text2TextGenerationPipeline(model, tokenizer)
 
 def TS_with_BART(sentence: str):

@@ -1,6 +1,6 @@
 mcts-main
 data/models
-data/mcts-pseudo
-venv/
 data/pseudo_tokenized
+venv
 ts_lite/model
+src/utils/__pycache__

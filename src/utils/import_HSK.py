@@ -1,4 +1,6 @@
-"""Reads HSK vocabulary files and compiles into single Pandas dataframe saved as pickle"""
+"""Reads HSK vocabulary files and compiles into single Pandas dataframe saved as pickle.
+NOTE: The output file is no longer needed for the LS pipeline - this code preserved only 
+for potential future use."""
 
 ### import packages
 import pandas as pd
