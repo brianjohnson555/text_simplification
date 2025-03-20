@@ -10,4 +10,6 @@ The text simplification is achieved through two means:
 
 The wikipedia dataset originates from Chong et al. [https://arxiv.org/abs/2306.02796], who machine-translated Chinese wikipedia to English, performed state-of-the-art text simplification in English, and machine-translated the simplified sentences back to Chinese to created a "pseudo" simplified sentence dataset.
 
+The fine-tuned BART model is based on [fnlp/bart-base-chinese](https://huggingface.co/fnlp/bart-base-chinese). [My fine-tuned model is available here](https://huggingface.co/johnsonrobotics24/bart-base-chinese-textsimplification-v1.0).
+
 Author: Brian K. Johnson 2024
