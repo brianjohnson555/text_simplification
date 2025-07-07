@@ -1,3 +1,9 @@
 Setup,L1-3 %,Freq^2,SARI,BLEU,BERTscore F1
 test,1,2,3,4,5
 baseline,-9.182,0.788,41.493,0.188,0.963
+baseline v2,-4.958,0.962,39.637,0.262,0.966
+baseline without judge,-4.958,0.962,39.637,0.262,0.966
+oneshot simplification without judge,-5.265,0.958,39.956,0.258,0.965
+oneshot simplification,-5.265,0.958,39.956,0.258,0.965
+L1-3 without judge,-5.185,0.975,40.810,0.282,0.968
+L1-3 oneshot without judge,-3.955,0.918,40.300,0.263,0.966
